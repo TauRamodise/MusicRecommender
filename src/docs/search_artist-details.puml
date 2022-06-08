@@ -1,0 +1,53 @@
+@startuml
+title SEARCH FOR ARTIST DETAILS
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: POST /search-artistDetails
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    artistName string
+    end note
+
+    MusicRecService -> MusicRecDB: getArtistDetails()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            SELECT * FROM Artists WHERE artistName = ?
+            ==**PARAMS**==
+            artistName
+        end note
+
+    MusicRecDB -> MusicRecService: artistDetails
+    deactivate MusicRecDB
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** No Artist Found
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid value entered
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** artistDetails
+        end note
+    end alt
+@enduml
