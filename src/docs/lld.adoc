@@ -1,0 +1,9 @@
+:imagesdir: ./images/
+
+= Music Recommender Documentation
+
+== Search for similar artists
+
+    GET /similar-artists
+
+image::search_artists.png[]
