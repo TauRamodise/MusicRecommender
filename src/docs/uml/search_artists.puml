@@ -1,0 +1,63 @@
+@startuml
+title SEARCH BY SOMETHING
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /search-artist
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    artistName string
+    genre string
+    releaseYear date
+    end note
+
+    MusicRecService -> MusicRecDB: getLikeArtist()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            SELECT * FROM (TABLE_NAME) WHERE genre = ?
+            ==**PARAMS**==
+            genre
+        end note
+
+    MusicRecDB -> MusicRecService: List<SimilarArtists>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **SimilarArtistsResponse:**
+            ArtistName
+            List<Discography>
+            genre
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** No Similar Artists Found
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid value entered
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<SimilarArtistsResponse>
+        end note
+    end alt
+@enduml

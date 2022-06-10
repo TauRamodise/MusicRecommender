@@ -1,0 +1,62 @@
+@startuml findSimilarArtists
+title SONGS OF THE YEAR
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /songs-of-the-year
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    year string
+    end note
+
+    MusicRecService -> MusicRecDB: songsOfTheYear()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            SELECT TOP 50 * FROM (Tracks)
+            WHERE YEAR(release_date) = 'year'
+            ORDER BY popularity DESC;
+            ==**PARAMS**==
+            year
+        end note
+
+    MusicRecDB -> MusicRecService: List<Tracks>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **SongsOfTheYearResponse:**
+            List<Tracks>
+            year
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** We could not find the top songs for that year. Try searching for a different year.
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid value entered for the year.
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<SongsOfTheYearResponse>
+        end note
+    end alt
+@enduml
