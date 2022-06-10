@@ -1,0 +1,71 @@
+@startuml
+title SEARCH BY SOMETHING
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /search-songsByMood
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    mood string
+    SongName string
+    Genre string
+    Danceability int
+    end note
+
+    MusicRecService -> MusicRecDB: getSongsByMood()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            if (mood=='chilled')
+                SELECT * FROM (tracks) where danceability<=10
+            else if (mood =='neutral')
+                SELECT * FROM (tracks) where danceability>10 and danceability<=20
+            else 
+                SELECT * FROM (tracks) where danceability>20
+            LIMIT 10
+            ==**PARAMS**==
+            mood (can select: chilled, neutral or vibey)
+        end note
+
+    MusicRecDB -> MusicRecService: List<SelectedSongsByMood>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **SimilarArtistsResponse:**
+            ArtistName
+            SongName
+            Genre
+            Danceability
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** The mood selected cannot be found
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid mood entered
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<SelectedSongsByMood>
+        end note
+    end alt
+@enduml

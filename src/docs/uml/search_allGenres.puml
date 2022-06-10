@@ -1,0 +1,59 @@
+@startuml
+title SEARCH BY SOMETHING
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /search-allGenres
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    Genres string
+    end note
+
+    MusicRecService -> MusicRecDB: getAllGenres()** is this nothing
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            SELECT Genre FROM (Artists)
+            ==**PARAMS**==
+            **is this nothing since its fetching everything ?
+        end note
+
+    MusicRecDB -> MusicRecService: List<GetAllGenres>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **GetAllGenresResponse:**
+            Genres
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** No Similar Artists Found
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid value entered
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<GetAllGenresResponse>
+        end note
+    end alt
+@enduml

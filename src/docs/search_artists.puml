@@ -1,4 +1,0 @@
-@startuml
-title SEARCH BY SOMETHING
-A -> B : Hello
-@enduml
