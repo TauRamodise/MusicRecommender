@@ -5,8 +5,14 @@ spring:
   profiles: dev
   application:
     name: MusicRecommender
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost{ADD DB CONNECTION HERE}
-    username: {DB USERNAME}
-    password: {DB PASSWORD}
+    datasource:
+      driver-class-name: com.mysql.jdbc.Driver
+      url: jdbc:mysql:clouddb.c554t2pimfma.af-south-1.rds.amazonaws.com
+      username: admin
+      password: gjc3CD5eHq9Z8cs
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant-path-matcher
+  redirect:
+    url: redirect:swagger-ui.html
