@@ -17,9 +17,4 @@ public class MusicRecApplication {
         SpringApplication.run(MusicRecApplication.class, args);
     }
 
-//    @Bean
-//    public Docket MusicRecApiConfig() {
-//        return new Docket(DocumentationType.SWAGGER_2).select()
-//                .apis(RequestHandlerSelectors.basePackage("com.music.musicrec")).build();
-//    }
 }
