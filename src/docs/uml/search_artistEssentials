@@ -1,0 +1,66 @@
+@startuml
+title SEARCH BY SOMETHING
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /search-artistEssentials
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    artistName string
+    genre string
+    songName string
+    popularity int **
+    end note
+
+    MusicRecService -> MusicRecDB: getLikedArtist()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            SELECT * FROM (Tracks) WHERE artistName = ? ORDER BY popularity **
+            LIMIT 15
+            ==**PARAMS**==
+            artistName
+        end note
+
+    MusicRecDB -> MusicRecService: List<SongsByArtist>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **SongsByArtist:**
+            SongName
+            Genre
+            Popularity **
+
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** Your selected Artist isn't in our database. Please try another one.
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid Arist name entered
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<SongsByArtist>
+        end note
+    end alt
+@enduml
