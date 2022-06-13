@@ -29,7 +29,7 @@ public class TracksEntity implements Serializable {
     private int explicit;
 
     @Column(name = "artists")
-    private int artists;
+    private String artists;
 
     @Column(name = "id_artists")
     private String artistId;
