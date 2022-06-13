@@ -13,12 +13,12 @@ spring:
     url: jdbc:sqlserver://clouddb.c554t2pimfma.af-south-1.rds.amazonaws.com
     username: admin
     password: gjc3CD5eHq9Z8cs
-#  jpa:
-#    hibernate:
+  jpa:
+    hibernate:
 #      ddl-auto: validate
 #      dialect: org.hibernate.dialect.SQLServer2019Dialect
 #      format-sql: true
-#    show-sql: true
+    show-sql: true
 
   mvc:
     pathmatch:

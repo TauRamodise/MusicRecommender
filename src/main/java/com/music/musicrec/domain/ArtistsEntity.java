@@ -1,33 +1,31 @@
 package com.music.musicrec.domain;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Artists")
+@Table(schema = "dbo", name = "artists")
 @NoArgsConstructor
-@Getter
-@Setter
+@AllArgsConstructor
+@Data
 public class ArtistsEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
-    @Column(name = "followers")
+//    @Column(name = "followers")
     private int followers;
 
-    @Column(name = "genres")
+//    @Column(name = "genres")
     private String genres;
 
-    @Column(name = "name")
+//    @Column(name = "name")
     private String name;
 
-    @Column(name = "popularity")
+//    @Column(name = "popularity")
     private int popularity;
 
 }

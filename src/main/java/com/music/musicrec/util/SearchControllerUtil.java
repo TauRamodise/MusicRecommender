@@ -1,42 +1,34 @@
- package com.music.musicrec.util;
+package com.music.musicrec.util;
 
- import com.music.musicrec.domain.ArtistsEntity;
- import com.music.musicrec.exceptions.MappingException;
- import com.music.musicrec.models.ArtistSearchRequest;
- import com.music.musicrec.models.ArtistSearchResponse;
+import com.music.musicrec.domain.ArtistsEntity;
+import com.music.musicrec.models.ArtistSearchResponse;
 
- import java.util.Arrays;
- import java.util.List;
+public class SearchControllerUtil {
 
- public class SearchControllerUtil {
+    private SearchControllerUtil() {
+    }
 
-     private SearchControllerUtil() {
-     }
+    public static ArtistSearchResponse mapToSearchResponseExample() {
 
-     public static ArtistSearchResponse mapToResponse(ArtistSearchRequest artistSearchRequest) throws MappingException {
-         if (artistSearchRequest == null) {
-             throw new MappingException("Error mapping ArtistSearchRequest to ArtistSearchResponse");
-         }
+        return ArtistSearchResponse.builder()
+                .id("00FQb4jTyendYWaN8pK0wa")
+                .name("Lana Del Rey")
+                .genre("pop")
+                .popularity(89)
+                .followers(12750166)
+                .build();
 
-         try {
-             return ArtistSearchResponse.builder()
-                     .artistName(artistSearchRequest.getArtistName())
-                     .genre(artistSearchRequest.getGenre())
-                     .build();
+    }
 
-         } catch (Exception e) {
-             throw new MappingException("Error mapping ArtistSearchRequest to ArtistSearchResponse");
+    public static ArtistSearchResponse mapToSearchResponse(ArtistsEntity artistSearch) {
 
-         }
-     }
+        return ArtistSearchResponse.builder()
+                .id("00FQb4jTyendYWaN8pK0wa")
+                .name("Lana Del Rey")
+                .genre("pop")
+                .popularity(89)
+                .followers(12750166)
+                .build();
 
-     public static ArtistSearchResponse mapToSearchResponse(ArtistsEntity artistSearch) {
-
-             return ArtistSearchResponse.builder()
-                     .artistName(artistSearch.getName())
-                     .genre(artistSearch.getGenres())
-                     .popularity(artistSearch.getPopularity())
-                     .build();
-
-     }
- }
+    }
+}

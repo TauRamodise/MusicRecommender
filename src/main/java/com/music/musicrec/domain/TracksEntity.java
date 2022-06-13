@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Artists")
+@Table(name = "artists")
 @NoArgsConstructor
 @Getter
 @Setter
