@@ -10,4 +10,6 @@ import java.util.List;
 public interface ArtistsRepository extends JpaRepository<ArtistsEntity, Long> {
 
     List<ArtistsEntity> findAll();
+
 }
+

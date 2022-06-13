@@ -1,36 +1,31 @@
 package com.music.musicrec.controllers;
 
 import com.music.musicrec.domain.ArtistsEntity;
-import com.music.musicrec.exceptions.MappingException;
-import com.music.musicrec.models.ArtistSearchRequest;
 import com.music.musicrec.models.ArtistSearchResponse;
 import com.music.musicrec.services.ArtistServiceImpl;
 import com.music.musicrec.util.SearchControllerUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponse;
-
 
 @RestController
-@AllArgsConstructor
-@NoArgsConstructor
 public class SearchController {
 
-    private ArtistServiceImpl artistService;
+    private final ArtistServiceImpl artistService;
+
+    @Autowired
+    public SearchController(ArtistServiceImpl artistService) {
+        this.artistService = artistService;
+    }
 
     @ApiOperation("Search for Simillar Artists")
     @ApiResponses(value = {
