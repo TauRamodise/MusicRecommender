@@ -5,11 +5,11 @@ spring:
   profiles: dev
   application:
     name: MusicRecommender
-    datasource:
-      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-      url: jdbc:sqlserver:clouddb.c554t2pimfma.af-south-1.rds.amazonaws.com
-      username: admin
-      password: gjc3CD5eHq9Z8cs
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver:clouddb.c554t2pimfma.af-south-1.rds.amazonaws.com
+    username: admin
+    password: gjc3CD5eHq9Z8cs
   jpa:
     hibernate:
       ddl-auto: validate
@@ -24,3 +24,8 @@ spring:
       matching-strategy: ant-path-matcher
   redirect:
     url: redirect:swagger-ui.html
+
+logging:
+  level:
+    org.springframework: INFO
+    com.music: DEBUG
