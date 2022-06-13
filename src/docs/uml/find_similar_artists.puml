@@ -1,0 +1,68 @@
+@startuml findSimilarArtists
+title FIND SIMILAR ARTISTS
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /find-similar-artists
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    artistName string
+    end note
+
+    MusicRecService -> MusicRecDB: findSimilarArtists()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            DECLARE @id varchar(100) = (SELECT id FROM Artists WHERE name='artistName')
+            DECLARE @genres varchar(100) = (SELECT genres FROM Artists WHERE id = @id)
+            DECLARE @genre1 varchar(100) = JSON_VALUE(REPLACE(@genres, '''', '"'), '$[0]')
+            DECLARE @genre2 varchar(100) = JSON_VALUE(REPLACE(@genres, '''', '"'), '$[1]')
+
+            SELECT TOP 10 * FROM (Artists)
+            WHERE genres LIKE '%''' + @genre1+ '''%' AND genres LIKE '%''' + @genre2+ '''%' 
+            AND id != @id
+            ORDER BY popularity DESC
+            ==**PARAMS**==
+            artistName
+        end note
+
+    MusicRecDB -> MusicRecService: List<Artists>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **SimilarArtistsResponse:**
+            ArtistName
+            List<Artists>
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** We could not find any similar artists. Try searching by Genre instead.
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid value entered for artist name.
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<SimilarArtistsResponse>
+        end note
+    end alt
+@enduml

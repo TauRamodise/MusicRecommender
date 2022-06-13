@@ -1,0 +1,62 @@
+@startuml findSimilarArtists
+title TOP ARTISTS BY GENRE
+
+actor Consumer
+box
+    participant MusicRecService
+end box
+
+box
+    database MusicRecDB
+end box
+
+Consumer -> MusicRecService: GET /top-artists-by-genre
+activate MusicRecService
+    note right #yellow
+    ==**Path Parameters**==
+    genreName string
+    end note
+
+    MusicRecService -> MusicRecDB: topArtistsByGenre()
+    activate MusicRecDB
+        note right #aqua
+            ==**SQL**==
+            SELECT TOP 10 * FROM (Artists)
+            WHERE genres LIKE '%''genreName''%'
+            ORDER BY popularity DESC;
+            ==**PARAMS**==
+            genreName
+        end note
+
+    MusicRecDB -> MusicRecService: List<Artists>
+    deactivate MusicRecDB
+
+    MusicRecService -> MusicRecService: map
+    note right #lightblue
+        **TopArtistsResponse:**
+            List<Artists>
+            genreName
+    end note
+
+    alt #pink Unhandled Exception
+        Consumer <<-- MusicRecService: 500 Internal Server Error
+        note right
+            **message:** Unknown Error
+        end note
+    else #pink Response Is Empty
+        Consumer <<-- MusicRecService: 404 Not Found
+        note right
+            **message:** We could not find any artists for that genre. Try a more basic genre instead.
+        end note
+    else #pink Invalid Parameter
+        Consumer <<-- MusicRecService: 400 Bad Request
+        note right
+            **message:** Invalid value entered for genre name.
+        end note
+    else #lightgreen Results Populated
+        Consumer <<-- MusicRecService: 200 OK
+        note right
+            **message:** List<TopArtistsResponse>
+        end note
+    end alt
+@enduml
