@@ -40,8 +40,8 @@ public class SearchController {
     @GetMapping(value = "/search-all-artist", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<ArtistSearchResponse>> getAllArtists() {
         List<ArtistsEntity> getAllArtists = artistService.getAllArtists();
-        ArtistSearchResponse getAll = (ArtistSearchResponse) getAllArtists.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
-        return ResponseEntity.ok(List.of(getAll));
+        List<ArtistSearchResponse> getAll = getAllArtists.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(getAll);
     }
 
     @ApiOperation("Search for Simillar Artists")

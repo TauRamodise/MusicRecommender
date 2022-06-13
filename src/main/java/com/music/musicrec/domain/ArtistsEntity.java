@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(schema = "dbo", name = "artists")
+@Table(name = "Artists")
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -16,16 +16,16 @@ public class ArtistsEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
-//    @Column(name = "followers")
+    @Column(name = "followers")
     private int followers;
 
-//    @Column(name = "genres")
+    @Column(name = "genres")
     private String genres;
 
-//    @Column(name = "name")
+    @Column(name = "name")
     private String name;
 
-//    @Column(name = "popularity")
+    @Column(name = "popularity")
     private int popularity;
 
 }

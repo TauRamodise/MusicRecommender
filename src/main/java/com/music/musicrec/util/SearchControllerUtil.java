@@ -23,11 +23,11 @@ public class SearchControllerUtil {
     public static ArtistSearchResponse mapToSearchResponse(ArtistsEntity artistSearch) {
 
         return ArtistSearchResponse.builder()
-                .id("00FQb4jTyendYWaN8pK0wa")
-                .name("Lana Del Rey")
-                .genre("pop")
-                .popularity(89)
-                .followers(12750166)
+                .id(artistSearch.getId())
+                .name(artistSearch.getName())
+                .genre(artistSearch.getGenres())
+                .popularity(artistSearch.getPopularity())
+                .followers(artistSearch.getFollowers())
                 .build();
 
     }

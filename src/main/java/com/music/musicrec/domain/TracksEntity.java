@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "artists")
+@Table(name = "Tracks")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -17,7 +17,7 @@ public class TracksEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     @Column(name = "name")
     private String trackName;
@@ -31,7 +31,7 @@ public class TracksEntity implements Serializable {
     @Column(name = "artists")
     private int artists;
 
-    @Column(name = "id_artist")
+    @Column(name = "id_artists")
     private String artistId;
 
     @Column(name = "release_date")

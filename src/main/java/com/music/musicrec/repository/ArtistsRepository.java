@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface ArtistsRepository extends JpaRepository<ArtistsEntity, Long> {
 
-//    @Query("select * from artists")
-
+//    @Query("select from Artists")
     List<ArtistsEntity> findAll();
     ArtistsEntity getArtistsEntitiesById(String id);
 
