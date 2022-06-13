@@ -19,4 +19,8 @@ public class TracksServiceImpl {
         return tracksRepository.findAll();
     }
 
+    public List<TracksEntity> getTopSongs() {
+        return tracksRepository.findAll();
+    }
+
 }
