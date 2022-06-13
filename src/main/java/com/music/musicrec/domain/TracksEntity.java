@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "Artists")
+@Table(name = "Tracks")
 @NoArgsConstructor
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class TracksEntity {
     private long id;
 
     @Column(name = "name")
-    private String trackName;
+    private String name;
 
     @Column(name = "popularity")
     private int popularity;
@@ -30,8 +30,8 @@ public class TracksEntity {
     @Column(name = "artists")
     private String artists;
 
-    @Column(name = "id_artist")
-    private String artistId;
+    @Column(name = "id_artists")
+    private String idArtists;
 
     @Column(name = "release_date")
     private Date releaseDate;
