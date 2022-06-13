@@ -17,8 +17,8 @@ public class SongsByMoodControllerUtil
 
         try {
             return SongsByMoodResponse.builder()
-                    .artistName(songsByMoodRequest.getArtistName())
-                    .songName(songsByMoodRequest.getSongName())
+                    .artists(songsByMoodRequest.getArtists())
+                    .name(songsByMoodRequest.getName())
                     .energy(songsByMoodRequest.getEnergy())
                     .build();
 
@@ -31,8 +31,8 @@ public class SongsByMoodControllerUtil
     public static SongsByMoodResponse mapToSearchResponse(TracksEntity tracksSearch) {
 
         return SongsByMoodResponse.builder()
-                .artistName(tracksSearch.getArtists())
-                .songName(tracksSearch.getTrackName())
+                .name(tracksSearch.getName())
+                .artists(tracksSearch.getArtists())
                 .energy(tracksSearch.getEnergy())
                 .build();
 

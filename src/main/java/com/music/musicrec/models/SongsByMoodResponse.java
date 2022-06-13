@@ -9,12 +9,11 @@ import lombok.Data;
 public class SongsByMoodResponse {
 
     @ApiModelProperty(value = "Name of Songs", example = "Happy")
-    private String songName;
+    private String name;
 
     @ApiModelProperty(value = "Name of Artist", example = "Pharrell Williams")
-    private String artistName;
+    private String artists;
 
     @ApiModelProperty(value = "Energy level", example = "75")
     private int energy;
-
 }
