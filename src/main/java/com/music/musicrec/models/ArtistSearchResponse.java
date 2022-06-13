@@ -16,7 +16,7 @@ public class ArtistSearchResponse {
     @ApiModelProperty(value = "Genre of Music", example = "RnB")
     private String genre;
 
-    @ApiModelProperty(value = "Release date", example = "2019")
-    private Date releaseYear;
+    @ApiModelProperty(value = "Artist Popularity", example = "75")
+    private int popularity;
 
 }
