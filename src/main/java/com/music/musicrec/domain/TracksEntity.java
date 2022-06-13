@@ -28,7 +28,7 @@ public class TracksEntity {
     private int explicit;
 
     @Column(name = "artists")
-    private int artists;
+    private String artists;
 
     @Column(name = "id_artist")
     private String artistId;
