@@ -63,7 +63,7 @@ public class SearchController {
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
     @GetMapping(value = "/search-artists-by-genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable String genre) throws MappingException {
+    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable(name="Choose a genre, eg. Pop") String genre) throws MappingException {
         try {
             List<ArtistsEntity> getArtistsByGenre = artistService.getArtistsByGenre(genre);
             List<ArtistSearchResponse> top10 = getArtistsByGenre.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
