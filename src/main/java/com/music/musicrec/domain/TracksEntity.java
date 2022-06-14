@@ -5,18 +5,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "Artists")
+@Table(name = "Tracks")
 @NoArgsConstructor
 @Getter
 @Setter
-public class TracksEntity {
+public class TracksEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
 
     @Column(name = "name")
     private String trackName;
@@ -30,7 +31,7 @@ public class TracksEntity {
     @Column(name = "artists")
     private String artists;
 
-    @Column(name = "id_artist")
+    @Column(name = "id_artists")
     private String artistId;
 
     @Column(name = "release_date")
