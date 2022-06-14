@@ -25,13 +25,6 @@ public class ArtistServiceImpl {
         return artistsRepository.findAll();
     }
 
-    public ArtistsEntity getOneArtists(String id) {
-        ArtistsEntity findOne = artistsRepository.getArtistsEntitiesById(id);
-        log.debug("here");
-        System.out.println(findOne);
-        return findOne;
-    }
-
     public List<ArtistsEntity> getArtistsByGenre(String genre) throws MappingException {
         List<ArtistsEntity> top10 = artistsRepository.getTop10ByGenresContainingIgnoreCaseOrderByPopularityDesc(genre);
 

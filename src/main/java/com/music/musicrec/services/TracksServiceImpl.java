@@ -4,6 +4,7 @@ import com.music.musicrec.domain.TracksEntity;
 import com.music.musicrec.exceptions.RecordNotFoundException;
 import com.music.musicrec.repository.TracksRepository;
 import org.springframework.stereotype.Service;
+import com.music.musicrec.exceptions.MappingException;
 
 import java.util.List;
 

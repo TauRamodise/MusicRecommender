@@ -43,16 +43,17 @@ public class ArtistController {
         return ResponseEntity.ok(allGenres);
     }
 
-    @ApiOperation("Search for one Artist")
+    @ApiOperation("Search for Simillar Artists")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful Operation"),
             @ApiResponse(code = 400, message = "Invalid Request"),
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
-    @GetMapping(value = "/search-all-artist/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ArtistSearchResponse> getOneArtists(@PathVariable String id) {
-
-        return ResponseEntity.ok(mapToSearchResponseExample());
+    @GetMapping(value = "/search-all-artist", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ArtistSearchResponse>> getAllArtists() {
+        List<ArtistsEntity> getAllArtists = artistService.getAllArtists();
+        List<ArtistSearchResponse> getAll = getAllArtists.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
+        return ResponseEntity.ok(getAll);
     }
 
     @ApiOperation("Search for Similar Artists")
