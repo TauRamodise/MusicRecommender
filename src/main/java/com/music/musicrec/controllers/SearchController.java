@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponse;
 import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponseExample;
 
 
