@@ -12,8 +12,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 @RestController
 public class TopSongsController {
 
+    @Autowired
     private TracksServiceImpl tracksService;
     @Autowired
     public TopSongsController(TracksServiceImpl tracksService) {
@@ -37,6 +37,7 @@ public class TopSongsController {
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
     @GetMapping(value = "/get-top-songs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<List<TrackSearchResponse>> getTopSongs(@Valid TopSongsRequest topSongsRequest) throws Exception {
         try {
             List<TracksEntity> getTopSongs = tracksService.getTopSongs(topSongsRequest.getYear());
