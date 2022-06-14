@@ -23,7 +23,7 @@ import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponseEx
 
 @RestController
 public class SearchController {
-
+    @Autowired
     private final ArtistServiceImpl artistService;
 
     @Autowired

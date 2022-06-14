@@ -15,11 +15,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -32,6 +28,7 @@ import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponse;
 @RestController
 public class TopSongsController {
 
+    @Autowired
     private TracksServiceImpl tracksService;
     @Autowired
     public TopSongsController(TracksServiceImpl tracksService) {
@@ -46,6 +43,7 @@ public class TopSongsController {
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
     @GetMapping(value = "/get-top-songs", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<List<TrackSearchResponse>> getTopSongs(@Valid TopSongsRequest topSongsRequest) throws Exception {
         try {
             List<TracksEntity> getTopSongs = tracksService.getTopSongs(topSongsRequest.getYear());
