@@ -36,7 +36,7 @@ public class TracksController
             @ApiResponse(code = 400, message = "Invalid Request"),
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
-    @GetMapping(value = "/get-songs-by-mood}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-songs-by-mood", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TrackSearchResponse>> getSongsByMood(@Valid SongsByMoodRequest songsByMoodRequest) throws MappingException {
         List<TracksEntity> getSongsByMood = tracksService.getSongsByMood(songsByMoodRequest.getMood());
         List<TrackSearchResponse> getSongs =  getSongsByMood.stream().map(TrackControllerUtil::mapToSearchResponse).collect(Collectors.toList());
