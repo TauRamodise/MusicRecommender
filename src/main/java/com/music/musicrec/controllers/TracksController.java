@@ -2,10 +2,7 @@ package com.music.musicrec.controllers;
 
 import com.music.musicrec.domain.TracksEntity;
 import com.music.musicrec.exceptions.MappingException;
-import com.music.musicrec.models.ArtistEssentialsResponse;
-import com.music.musicrec.models.SongsByMoodRequest;
-import com.music.musicrec.models.TopSongsRequest;
-import com.music.musicrec.models.TrackSearchResponse;
+import com.music.musicrec.models.*;
 import com.music.musicrec.services.TracksServiceImpl;
 import com.music.musicrec.util.ArtistEssentialsControllerUtil;
 import com.music.musicrec.util.TrackControllerUtil;
@@ -76,5 +73,18 @@ public class TracksController
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping(value = "/dance-playlist", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TracksEntity>> createDanceabilityPlaylist(@RequestBody Danceability danceability) {
+
+        List<TracksEntity> danceabilityPlaylist = null;
+        String score = danceability.getDanceability();
+        try {
+            danceabilityPlaylist = tracksService.getDanceabilityPlaylist(score);
+        } catch (MappingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ResponseEntity.ok(danceabilityPlaylist);
+    }
 }
 
