@@ -24,6 +24,10 @@ public interface ArtistsRepository extends JpaRepository<ArtistsEntity, Long> {
                     "            ORDER BY popularity DESC",
             nativeQuery = true)
     List<ArtistsEntity> getArtists(String artistName);
-
+  
+    @Query(
+        value="Select genres from Artists",
+        nativeQuery = true)
+    List<String> getGenresDB();
 }
 
