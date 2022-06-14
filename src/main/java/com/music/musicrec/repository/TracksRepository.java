@@ -15,4 +15,8 @@ public interface TracksRepository extends JpaRepository<TracksEntity, Long> {
 
 //    @Query('Select ...where energy>5')
 //    ArtistsEntity addNewArtist(String name)
+//
+//    @Query('Select * from TracksEntity where energy>20 order by energy')
+//    List<TracksEntity>
+
 }

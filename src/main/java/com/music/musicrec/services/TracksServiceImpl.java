@@ -14,6 +14,7 @@ public class TracksServiceImpl {
 
     public List<TracksEntity> getSongsByMood() {
         return tracksRepository.findAll();
+
     }
 
     public List<TracksEntity> getTopSongs(String year) {
