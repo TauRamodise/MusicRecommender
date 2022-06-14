@@ -15,8 +15,14 @@ public class TracksServiceImpl {
         this.tracksRepository = tracksRepository;
     }
 
-    public List<TracksEntity> getSongsByMood(int energy) {
-        return tracksRepository.findAllByEnergy(energy);
+    public List<TracksEntity> getSongsByMood(int energy) throws MappingException {
+
+        List<TracksEntity> allSongsByEnergy = tracksRepository.findAllByEnergy(energy);
+
+        if (allSongsByEnergy.isEmpty()) {
+            throw new MappingException("No records found for given energy");
+        }
+        return allSongsByEnergy;
 
     }
 
