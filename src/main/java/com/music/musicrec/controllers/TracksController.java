@@ -2,10 +2,7 @@ package com.music.musicrec.controllers;
 
 import com.music.musicrec.domain.TracksEntity;
 import com.music.musicrec.exceptions.MappingException;
-import com.music.musicrec.models.ArtistEssentialsResponse;
-import com.music.musicrec.models.SongsByMoodRequest;
-import com.music.musicrec.models.TopSongsRequest;
-import com.music.musicrec.models.TrackSearchResponse;
+import com.music.musicrec.models.*;
 import com.music.musicrec.services.TracksServiceImpl;
 import com.music.musicrec.util.ArtistEssentialsControllerUtil;
 import com.music.musicrec.util.TrackControllerUtil;
@@ -36,7 +33,7 @@ public class TracksController
             @ApiResponse(code = 400, message = "Invalid Request"),
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
-    @GetMapping(value = "/get-songs-by-mood}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/get-songs-by-mood", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TrackSearchResponse>> getSongsByMood(@Valid SongsByMoodRequest songsByMoodRequest) throws MappingException {
         List<TracksEntity> getSongsByMood = tracksService.getSongsByMood(songsByMoodRequest.getMood());
         List<TrackSearchResponse> getSongs =  getSongsByMood.stream().map(TrackControllerUtil::mapToSearchResponse).collect(Collectors.toList());
@@ -63,7 +60,7 @@ public class TracksController
         }
     }
 
-    @ApiOperation("Get an Artist's Esential Tracks")
+    @ApiOperation("Get an Artist's Essential Tracks")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful Operation"),
             @ApiResponse(code = 400, message = "Invalid Request"),
@@ -76,5 +73,19 @@ public class TracksController
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("Get a Playlist Based on Dance Mood")
+    @PostMapping(value = "/dance-playlist", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TracksEntity>> createDanceabilityPlaylist(@RequestBody Danceability danceability) {
+
+        List<TracksEntity> danceabilityPlaylist = null;
+        String score = danceability.getDanceability();
+        try {
+            danceabilityPlaylist = tracksService.getDanceabilityPlaylist(score);
+        } catch (MappingException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ResponseEntity.ok(danceabilityPlaylist);
+    }
 }
 
