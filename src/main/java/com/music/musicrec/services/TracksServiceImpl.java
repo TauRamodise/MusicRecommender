@@ -19,8 +19,8 @@ public class TracksServiceImpl {
         return tracksRepository.findAll();
     }
 
-    public List<TracksEntity> getTopSongs() {
-        return tracksRepository.findAll();
+    public List<TracksEntity> getTopSongs(String year) {
+        return tracksRepository.getTopSongs(year);
     }
 
 }

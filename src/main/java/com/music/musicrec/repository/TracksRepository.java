@@ -12,6 +12,9 @@ import java.util.List;
 public interface TracksRepository extends JpaRepository<TracksEntity, Long> {
 
     List<TracksEntity> findAll();
+    // @Query("SELECT TOP (50) * FROM [Artists_DB].[dbo].[Tracks] where release_date LIKE '% :id %' order by popularity desc");
+    List<TracksEntity> getTopSongs(String year);
+
 //    @Query('Select ...where energy>5')
 //    ArtistsEntity addNewArtist(String name)
 }
