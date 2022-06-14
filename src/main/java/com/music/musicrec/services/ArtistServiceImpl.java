@@ -32,6 +32,14 @@ public class ArtistServiceImpl {
         return findOne;
     }
 
+    public List<ArtistsEntity> getArtistsByGenre(String genre) throws MappingException {
+        List<ArtistsEntity> top10 = artistsRepository.getTop10ByGenresContainingIgnoreCaseOrderByPopularityDesc(genre);
+
+        if(top10.isEmpty()){
+            throw new MappingException("We could not find any artists of that genre.");
+        }
+        return top10;
+    }
     public List<ArtistsEntity> findSimilarArtists(String artistName) throws MappingException {
         List<ArtistsEntity> similarArtists = artistsRepository.getArtists(artistName);
 

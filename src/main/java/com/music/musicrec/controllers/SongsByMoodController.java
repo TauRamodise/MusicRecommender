@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
 
 public class SongsByMoodController {
 
-
+    @Autowired
     private TracksServiceImpl tracksService;
 
     @Autowired
@@ -35,6 +36,7 @@ public class SongsByMoodController {
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
     @GetMapping(value = "/get-songs-by-mood/{energy}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public ResponseEntity<List<TrackSearchResponse>> getSongsByMood(@PathVariable int energy) {
         List<TracksEntity> getSongsByMood = tracksService.getSongsByMood(energy);
         List<TrackSearchResponse> getSongs =  getSongsByMood.stream().map(TrackControllerUtil::mapToSearchResponse).collect(Collectors.toList());
