@@ -1,6 +1,7 @@
 package com.music.musicrec.controllers;
 
 import com.music.musicrec.domain.ArtistsEntity;
+import com.music.musicrec.exceptions.MappingException;
 import com.music.musicrec.models.ArtistSearchResponse;
 import com.music.musicrec.services.ArtistServiceImpl;
 import com.music.musicrec.util.SearchControllerUtil;
@@ -61,10 +62,14 @@ public class SearchController {
             @ApiResponse(code = 400, message = "Invalid Request"),
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
-    @GetMapping(value = "/get-artists-by-genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable String genre) {
-        List<ArtistsEntity> getArtistsByGenre = artistService.getArtistsByGenre(genre);
-        List<ArtistSearchResponse> top10 = getArtistsByGenre.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
-        return ResponseEntity.ok(top10);
+    @GetMapping(value = "/search-artists-by-genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable String genre) throws MappingException {
+        try {
+            List<ArtistsEntity> getArtistsByGenre = artistService.getArtistsByGenre(genre);
+            List<ArtistSearchResponse> top10 = getArtistsByGenre.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
+            return ResponseEntity.ok(top10);
+        } catch (MappingException e) {
+            throw new MappingException("That genre was not found in the database.", e.getCause());
+        }
     }
 }
