@@ -72,6 +72,22 @@ public class ArtistController {
             throw new MappingException("We could not find any similar artists", e.getCause());
         }
     }
+    @ApiOperation("Search for Top Artists in Genre")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Operation"),
+            @ApiResponse(code = 400, message = "Invalid Request"),
+            @ApiResponse(code = 500, message = "Unknown Error Occurred")
+    })
+    @GetMapping(value = "/search-artists-by-genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable(name="Choose a genre, eg. Pop") String genre) throws MappingException {
+        try {
+            List<ArtistsEntity> getArtistsByGenre = artistService.getArtistsByGenre(genre);
+            List<ArtistSearchResponse> top10 = getArtistsByGenre.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
+            return ResponseEntity.ok(top10);
+        } catch (MappingException e) {
+            throw new MappingException("That genre was not found in the database.", e.getCause());
+        }
+    }
 
 
 }

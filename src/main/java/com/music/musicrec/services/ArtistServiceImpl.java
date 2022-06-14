@@ -3,6 +3,7 @@ package com.music.musicrec.services;
 import com.music.musicrec.domain.ArtistsEntity;
 import com.music.musicrec.exceptions.MappingException;
 import com.music.musicrec.repository.ArtistsRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,14 @@ public class ArtistServiceImpl {
         return findOne;
     }
 
+    public List<ArtistsEntity> getArtistsByGenre(String genre) throws MappingException {
+        List<ArtistsEntity> top10 = artistsRepository.getTop10ByGenresContainingIgnoreCaseOrderByPopularityDesc(genre);
+
+        if(top10.isEmpty()){
+            throw new MappingException("We could not find any artists of that genre.");
+        }
+        return top10;
+    }
     public List<ArtistsEntity> findSimilarArtists(String artistName) throws MappingException {
         List<ArtistsEntity> similarArtists = artistsRepository.getArtists(artistName);
 
