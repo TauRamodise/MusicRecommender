@@ -28,4 +28,9 @@ public class ArtistServiceImpl {
         System.out.println(findOne);
         return findOne;
     }
+
+    public List<ArtistsEntity> getArtistsByGenre(String genre){
+        List<ArtistsEntity> top10 = artistsRepository.getTop10ByGenresContainingIgnoreCaseOrderByPopularityDesc(genre);
+        return top10;
+    }
 }

@@ -12,5 +12,6 @@ public interface ArtistsRepository extends JpaRepository<ArtistsEntity, Long> {
     List<ArtistsEntity> findAll();
     ArtistsEntity getArtistsEntitiesById(String id);
 
+    List<ArtistsEntity> getTop10ByGenresContainingIgnoreCaseOrderByPopularityDesc(String genre);
 }
 
