@@ -1,6 +1,7 @@
 package com.music.musicrec.services;
 
 import com.music.musicrec.domain.ArtistsEntity;
+import com.music.musicrec.exceptions.MappingException;
 import com.music.musicrec.repository.ArtistsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,4 +29,16 @@ public class ArtistServiceImpl {
         System.out.println(findOne);
         return findOne;
     }
+
+    public List<ArtistsEntity> findSimilarArtists(String artistName) throws MappingException {
+        List<ArtistsEntity> similarArtists = artistsRepository.getArtists(artistName);
+
+        if (similarArtists.isEmpty()) {
+            throw new MappingException("We could not find any similar artists");
+        }
+
+        return similarArtists;
+    }
+
+
 }
