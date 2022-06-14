@@ -1,32 +1,23 @@
 package com.music.musicrec.controllers;
 
 import com.music.musicrec.domain.TracksEntity;
-import com.music.musicrec.exceptions.MappingException;
+import com.music.musicrec.exceptions.RecordNotFoundException;
 import com.music.musicrec.models.TopSongsRequest;
-import com.music.musicrec.models.TrackSearchRequest;
 import com.music.musicrec.models.TrackSearchResponse;
 import com.music.musicrec.services.TracksServiceImpl;
 import com.music.musicrec.util.TrackControllerUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponse;
 
 
 @RestController
@@ -52,8 +43,8 @@ public class TopSongsController {
             List<TrackSearchResponse> getAll = getTopSongs.stream().map(TrackControllerUtil::mapToSearchResponse).collect(Collectors.toList());
             return ResponseEntity.ok(getAll);
         }
-        catch (MappingException e) {
-            throw new MappingException("No records found for given year", e.getCause());
+        catch (Exception e) {
+            throw new RecordNotFoundException("No records found for given year");
         }
     }
 
