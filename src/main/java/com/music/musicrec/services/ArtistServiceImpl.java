@@ -1,11 +1,13 @@
 package com.music.musicrec.services;
 
 import com.music.musicrec.domain.ArtistsEntity;
+import com.music.musicrec.exceptions.MappingException;
 import com.music.musicrec.repository.ArtistsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -27,5 +29,37 @@ public class ArtistServiceImpl {
         log.debug("here");
         System.out.println(findOne);
         return findOne;
+    }
+
+    public List<ArtistsEntity> findSimilarArtists(String artistName) throws MappingException {
+        List<ArtistsEntity> similarArtists = artistsRepository.getArtists(artistName);
+
+        if (similarArtists.isEmpty()) {
+            throw new MappingException("We could not find any similar artists");
+        }
+
+        return similarArtists;
+    }
+
+    public List<String> getGenres() {
+        List<String> genresDB = artistsRepository.getGenresDB();
+        log.debug("here");
+
+        List<String> allGenres = new ArrayList<String>();
+
+        genresDB.forEach((genre) -> {
+            String genreSubstring = genre.substring(1, genre.length() - 1);
+            String[] genresArray = genreSubstring.split(", ", 0);
+            for (String gen:genresArray) {
+                String genSubstring = gen.replace("'", "");
+                if (!allGenres.contains(genSubstring)) {
+                    allGenres.add(genSubstring);
+                }
+            };
+                    
+        });
+
+        System.out.println("hello");
+        return allGenres;
     }
 }
