@@ -20,31 +20,30 @@ import java.util.stream.Collectors;
 
 import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponseExample;
 
-
 @RestController
-public class SearchController {
-    @Autowired
-    private final ArtistServiceImpl artistService;
+public class ArtistController {
+
+    private ArtistServiceImpl artistService;
 
     @Autowired
-    public SearchController(ArtistServiceImpl artistService) {
+    public ArtistController(ArtistServiceImpl artistService) {
         this.artistService = artistService;
     }
 
-    @ApiOperation("Search for Simillar Artists")
+    @ApiOperation("Get a list of all genres")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful Operation"),
             @ApiResponse(code = 400, message = "Invalid Request"),
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
-    @GetMapping(value = "/search-all-artist", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ArtistSearchResponse>> getAllArtists() {
-        List<ArtistsEntity> getAllArtists = artistService.getAllArtists();
-        List<ArtistSearchResponse> getAll = getAllArtists.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
-        return ResponseEntity.ok(getAll);
+    @GetMapping(value = "/all-genres", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String>> getAllGenres() {
+        List<String> allGenres = artistService.getGenres();
+
+        return ResponseEntity.ok(allGenres);
     }
 
-    @ApiOperation("Search for Simillar Artists")
+    @ApiOperation("Search for one Artist")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful Operation"),
             @ApiResponse(code = 400, message = "Invalid Request"),
@@ -56,6 +55,23 @@ public class SearchController {
         return ResponseEntity.ok(mapToSearchResponseExample());
     }
 
+    @ApiOperation("Search for Similar Artists")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successful Operation"),
+            @ApiResponse(code = 400, message = "Invalid Request"),
+            @ApiResponse(code = 500, message = "Unknown Error Occurred")
+    })
+    @GetMapping(value = "/find-similar-artists/{artistName}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<ArtistSearchResponse>> findSimilarArtists(@PathVariable String artistName) throws Exception {
+        try
+        {
+            List<ArtistsEntity> getAllArtists = artistService.findSimilarArtists(artistName);
+            List<ArtistSearchResponse> getAll = getAllArtists.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
+            return ResponseEntity.ok(getAll);
+        } catch (MappingException e) {
+            throw new MappingException("We could not find any similar artists", e.getCause());
+        }
+    }
     @ApiOperation("Search for Top Artists in Genre")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful Operation"),
@@ -63,7 +79,7 @@ public class SearchController {
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
     @GetMapping(value = "/search-artists-by-genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable String genre) throws MappingException {
+    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable(name="Choose a genre, eg. Pop") String genre) throws MappingException {
         try {
             List<ArtistsEntity> getArtistsByGenre = artistService.getArtistsByGenre(genre);
             List<ArtistSearchResponse> top10 = getArtistsByGenre.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
@@ -72,4 +88,6 @@ public class SearchController {
             throw new MappingException("That genre was not found in the database.", e.getCause());
         }
     }
+
+
 }
