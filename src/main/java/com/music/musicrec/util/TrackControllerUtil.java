@@ -5,9 +5,6 @@
  import com.music.musicrec.models.TrackSearchRequest;
  import com.music.musicrec.models.TrackSearchResponse;
 
- import java.util.Arrays;
- import java.util.List;
-
  public class TrackControllerUtil {
 
      private TrackControllerUtil() {
@@ -26,7 +23,7 @@
                     .releaseDate(trackSearchRequest.getReleaseDate())
                     .explicit(trackSearchRequest.getExplicit())
                     .artists(trackSearchRequest.getArtists())
-                    .idArtists(trackSearchRequest.getIdArtists())
+                    .artistId(trackSearchRequest.getIdArtists())
                     .energy(trackSearchRequest.getEnergy())
                     .danceability(trackSearchRequest.getDanceability())
                     .build();
@@ -46,7 +43,7 @@
                     .releaseDate(trackSearch.getReleaseDate())
                     .explicit(trackSearch.getExplicit())
                     .artists(trackSearch.getArtists())
-                    .idArtists(trackSearch.getIdArtists())
+                    .artistId(trackSearch.getArtistId())
                     .energy(trackSearch.getEnergy())
                     .danceability(trackSearch.getDanceability())
                     .build();
