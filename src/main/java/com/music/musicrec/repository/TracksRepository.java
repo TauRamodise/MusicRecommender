@@ -14,10 +14,9 @@ public interface TracksRepository extends JpaRepository<TracksEntity, Long> {
 
     @Query(value = "SELECT TOP (50) * FROM Tracks where YEAR(release_date) = :year ORDER BY popularity DESC", nativeQuery = true)
     List<TracksEntity> findAllByReleaseDate(String year);
-//    @Query('Select ...where energy>5')
-//    ArtistsEntity addNewArtist(String name)
-//
-//    @Query('Select * from TracksEntity where energy>20 order by energy')
-//    List<TracksEntity>
+
+    @Query(value ="Select * from Tracks where energy=:energy", nativeQuery = true)
+    List<TracksEntity> findAllByEnergy(int energy);
+
 
 }
