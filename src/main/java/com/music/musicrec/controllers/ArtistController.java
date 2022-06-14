@@ -6,6 +6,7 @@ import com.music.musicrec.models.ArtistSearchResponse;
 import com.music.musicrec.services.ArtistServiceImpl;
 import com.music.musicrec.util.SearchControllerUtil;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class ArtistController {
             @ApiResponse(code = 500, message = "Unknown Error Occurred")
     })
     @GetMapping(value = "/search-artists-by-genre/{genre}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@PathVariable(name="Choose a genre, eg. Pop") String genre) throws MappingException {
+    public ResponseEntity<List<ArtistSearchResponse>> getArtistsByGenre(@ApiParam(value="Choose a genre, eg. Pop", required = true) @PathVariable("genre") String genre) throws MappingException {
         try {
             List<ArtistsEntity> getArtistsByGenre = artistService.getArtistsByGenre(genre);
             List<ArtistSearchResponse> top10 = getArtistsByGenre.stream().map(SearchControllerUtil::mapToSearchResponse).collect(Collectors.toList());
