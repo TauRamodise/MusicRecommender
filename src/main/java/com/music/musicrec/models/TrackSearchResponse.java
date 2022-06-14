@@ -11,7 +11,7 @@ import java.util.Date;
 public class TrackSearchResponse {
 
     @ApiModelProperty(value = "ID of Song", example = "0cqRj7pUJDkTCEsJkx8snD")
-    private long id;
+    private String id;
 
     @ApiModelProperty(value = "Name of Song", example = "Shake It Off")
     private String name;
