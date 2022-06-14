@@ -9,7 +9,7 @@ import springfox.documentation.annotations.ApiIgnore;
 @ApiIgnore
 public class HomeController {
 
-    @Value("${musicrec.redirect.url}")
+    @Value("${music-rec.redirect.url:}")
     private String redirectURL;
 
     @RequestMapping(value = "/")

@@ -1,10 +1,7 @@
 package com.music.musicrec.services;
 
-import com.music.musicrec.domain.ArtistsEntity;
 import com.music.musicrec.domain.TracksEntity;
-import com.music.musicrec.repository.ArtistsRepository;
 import com.music.musicrec.repository.TracksRepository;
-import lombok.AllArgsConstructor;
 
 import java.util.List;
 
