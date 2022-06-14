@@ -21,7 +21,7 @@ public class MusicRecApi {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("com.music.musicrec.controllers"))
                 .paths(PathSelectors.any())
                 .build();
     }

@@ -1,9 +1,10 @@
 package com.music.musicrec.services;
 
 import com.music.musicrec.domain.TracksEntity;
-import com.music.musicrec.exceptions.MappingException;
+import com.music.musicrec.exceptions.RecordNotFoundException;
 import com.music.musicrec.repository.TracksRepository;
 import org.springframework.stereotype.Service;
+import com.music.musicrec.exceptions.MappingException;
 
 import java.util.List;
 
@@ -57,12 +58,12 @@ public class TracksServiceImpl {
         }
     }
 
-    public List<TracksEntity> getTopSongs(String year) throws MappingException {
+    public List<TracksEntity> getTopSongs(String year) throws RecordNotFoundException {
 
         List<TracksEntity> allTopSongs = tracksRepository.findAllByReleaseDate(year);
 
         if (allTopSongs.isEmpty()) {
-            throw new MappingException("No records found for given year");
+            throw new RecordNotFoundException("No records found for given year");
         }
         return allTopSongs;
     }

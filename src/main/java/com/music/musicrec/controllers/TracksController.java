@@ -58,7 +58,7 @@ public class TracksController
             List<TrackSearchResponse> getAll = getTopSongs.stream().map(TrackControllerUtil::mapToSearchResponse).collect(Collectors.toList());
             return ResponseEntity.ok(getAll);
         }
-        catch (MappingException e) {
+        catch (Exception e) {
             throw new MappingException("No records found for given year", e.getCause());
         }
     }
