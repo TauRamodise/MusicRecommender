@@ -1,8 +1,8 @@
 package com.music.musicrec.models;
 
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.Builder;
+import lombok.Data;
 
 import java.util.Date;
 
