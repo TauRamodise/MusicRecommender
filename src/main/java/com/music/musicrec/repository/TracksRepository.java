@@ -18,5 +18,6 @@ public interface TracksRepository extends JpaRepository<TracksEntity, Long> {
     @Query(value ="Select * from Tracks where energy=:energy", nativeQuery = true)
     List<TracksEntity> findAllByEnergy(int energy);
 
-
+    @Query(value ="SELECT TOP (10) * FROM Tracks WHERE danceability>=:min and danceability<=:max ORDER BY popularity DESC", nativeQuery = true)
+    List<TracksEntity> findAllByDanceability(int min, int max);
 }
