@@ -2,6 +2,7 @@ package com.music.musicrec.repository;
 
 import com.music.musicrec.domain.TracksEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,9 +11,9 @@ import java.util.List;
 public interface TracksRepository extends JpaRepository<TracksEntity, Long> {
 
     List<TracksEntity> findAll();
-    // @Query("SELECT TOP (50) * FROM [Artists_DB].[dbo].[Tracks] where release_date LIKE '% :id %' order by popularity desc");
-    List<TracksEntity> getTopSongs(String year);
 
+    @Query(value = "SELECT TOP (50) * FROM Tracks where YEAR(release_date) = :year ORDER BY popularity DESC", nativeQuery = true)
+    List<TracksEntity> findAllByReleaseDate(String year);
 //    @Query('Select ...where energy>5')
 //    ArtistsEntity addNewArtist(String name)
 //

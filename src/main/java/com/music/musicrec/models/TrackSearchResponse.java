@@ -29,7 +29,7 @@ public class TrackSearchResponse {
     private String artists;
 
     @ApiModelProperty(value = "ID of Artists", example = "['06HL4z0CvFAxyc27GXpf02']")
-    private String idArtists;
+    private String artistId;
     
     @ApiModelProperty(value = "Energy", example = "92")
     private Integer energy;
