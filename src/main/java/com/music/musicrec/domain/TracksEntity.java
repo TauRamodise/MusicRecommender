@@ -20,7 +20,7 @@ public class TracksEntity implements Serializable {
     private String id;
 
     @Column(name = "name")
-    private String trackName;
+    private String name;
 
     @Column(name = "popularity")
     private int popularity;
