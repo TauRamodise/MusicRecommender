@@ -3,6 +3,7 @@ package com.music.musicrec.services;
 import com.music.musicrec.domain.ArtistsEntity;
 import com.music.musicrec.exceptions.MappingException;
 import com.music.musicrec.repository.ArtistsRepository;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
