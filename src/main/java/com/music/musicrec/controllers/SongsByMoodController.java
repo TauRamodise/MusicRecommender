@@ -38,7 +38,7 @@ public class SongsByMoodController {
     })
     @GetMapping(value = "/get-songs-by-mood}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TrackSearchResponse>> getSongsByMood(@Valid SongsByMoodRequest songsByMoodRequest) throws MappingException {
-        List<TracksEntity> getSongsByMood = tracksService.getSongsByMood(songsByMoodRequest.getEnergy());
+        List<TracksEntity> getSongsByMood = tracksService.getSongsByMood(songsByMoodRequest.getMood());
         List<TrackSearchResponse> getSongs =  getSongsByMood.stream().map(TrackControllerUtil::mapToSearchResponse).collect(Collectors.toList());
         return ResponseEntity.ok(getSongs);
     }

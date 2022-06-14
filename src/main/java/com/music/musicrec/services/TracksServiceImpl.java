@@ -15,15 +15,46 @@ public class TracksServiceImpl {
         this.tracksRepository = tracksRepository;
     }
 
-    public List<TracksEntity> getSongsByMood(int energy) throws MappingException {
+    public List<TracksEntity> getSongsByMood(String mood) throws MappingException {
 
-        List<TracksEntity> allSongsByEnergy = tracksRepository.findAllByEnergy(energy);
+        int min=0;
+        int max=0;
 
-        if (allSongsByEnergy.isEmpty()) {
-            throw new MappingException("No records found for given energy");
+        if(!(mood.equalsIgnoreCase("CHILL")||mood.equalsIgnoreCase("VIBEY")||mood.equalsIgnoreCase("PARTY")))
+        {
+            throw new MappingException("Please choose a valid mood");
         }
-        return allSongsByEnergy;
+        else
+        {
+            mood = mood.toUpperCase();
+            switch(mood)
+            {
+                case "CHILL":
+                      min = 0;
+                      max = 50;
+                      break;
+                  case "VIBEY":
+                      min = 51;
+                      max = 70;
+                      break;
+                  case "PARTY":
+                      min = 71;
+                      max = 100;
+                      break;
+                  default:
+                      min = 0;
+                      max = 100;
+                      break;
 
+              }
+
+            List<TracksEntity> allSongsByEnergy = tracksRepository.findAllByEnergy(min, max);
+
+            if (allSongsByEnergy.isEmpty()) {
+                throw new MappingException("No records found for given mood");
+            }
+            return allSongsByEnergy;
+        }
     }
 
     public List<TracksEntity> getTopSongs(String year) throws MappingException {
