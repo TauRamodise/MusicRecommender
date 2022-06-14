@@ -60,7 +60,7 @@ public class TracksController
         }
     }
 
-    @ApiOperation("Get an Artist's Esential Tracks")
+    @ApiOperation("Get an Artist's Essential Tracks")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Successful Operation"),
             @ApiResponse(code = 400, message = "Invalid Request"),
@@ -73,6 +73,7 @@ public class TracksController
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("Get a Playlist Based on Dance Mood")
     @PostMapping(value = "/dance-playlist", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TracksEntity>> createDanceabilityPlaylist(@RequestBody Danceability danceability) {
 
