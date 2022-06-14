@@ -30,4 +30,7 @@ public class TracksServiceImpl {
         return allTopSongs;
     }
 
+    public List<TracksEntity> getArtistEssentials(String artistName, int count) {
+      return tracksRepository.findArtistTracks('%' + artistName + '%', count); //
+  }
 }
