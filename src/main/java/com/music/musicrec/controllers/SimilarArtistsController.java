@@ -25,6 +25,7 @@ import static com.music.musicrec.util.SearchControllerUtil.mapToSearchResponse;
 
 @RestController
 public class SimilarArtistsController {
+    @Autowired
     private ArtistServiceImpl artistService;
 
     @Autowired
