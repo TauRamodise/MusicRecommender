@@ -15,8 +15,8 @@ public class TracksServiceImpl {
         this.tracksRepository = tracksRepository;
     }
 
-    public List<TracksEntity> getSongsByMood() {
-        return tracksRepository.findAll();
+    public List<TracksEntity> getSongsByMood(int energy) {
+        return tracksRepository.findAllByEnergy(energy);
 
     }
 
