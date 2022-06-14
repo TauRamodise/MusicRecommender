@@ -22,15 +22,5 @@ import java.util.List;
                      .energy(artistEssentials.getEnergy())
                      .build();
 
-            // return ArtistEssentialsResponse.builder()
-            //          .popularity(1)
-            //          .name("test")
-            //          .explicit(2)
-            //          .artists("adele")
-            //          .releaseDate(new Date())
-            //          .danceability(3)
-            //          .energy(4)
-            //          .build();
-
      }
  }

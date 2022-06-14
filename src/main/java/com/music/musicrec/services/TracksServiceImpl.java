@@ -31,8 +31,6 @@ public class TracksServiceImpl {
     }
 
     public List<TracksEntity> getArtistEssentials(String artistName, int count) {
-      System.out.println("artistName:");
-      System.out.println(artistName);
       return tracksRepository.findArtistTracks('%' + artistName + '%', count); //
   }
 }

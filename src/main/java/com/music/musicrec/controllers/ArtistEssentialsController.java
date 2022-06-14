@@ -1,17 +1,12 @@
 package com.music.musicrec.controllers;
 
-import com.music.musicrec.domain.ArtistsEntity;
 import com.music.musicrec.domain.TracksEntity;
-import com.music.musicrec.exceptions.MappingException;
-import com.music.musicrec.models.ArtistEssentialsRequest;
 import com.music.musicrec.models.ArtistEssentialsResponse;
 import com.music.musicrec.services.TracksServiceImpl;
 import com.music.musicrec.util.ArtistEssentialsControllerUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
